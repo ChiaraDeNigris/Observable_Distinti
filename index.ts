@@ -1,20 +1,26 @@
 import { ajax } from 'rxjs/ajax';
 import { Observable, interval } from "rxjs";
 
-const apiKey = "9bd419b49d4261031516ad5fddac3439";
+const apiKey = "223e36e264fd262c0dd5e26c63edf39f";
 const URL =
   "https://api.openweathermap.org/data/2.5/weather?APPID=" +
   apiKey +
   "&units=metric&q=";
 var city="Pisa";
-const tick = interval(10000);
+const tick = interval(1);
+var t1 = 0;
 //Costruisco l'observable
 const temp = new Observable(subscriber => tick.subscribe( { 
   next(n) { 
     fetch(URL + city)
       .then(response =>  response.json())
-        .then(data => 
-          subscriber.next(data.main.temp));
+        .then(data => {
+          var t = data.main.temp;
+          if (t != t1){
+              subscriber.next(data.main.temp)
+              t1 = t;
+          }
+         } );
   } } ) ); 
 // Due subscriber
 temp.subscribe({   
