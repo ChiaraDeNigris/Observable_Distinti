@@ -7,7 +7,7 @@ const URL =
   apiKey +
   "&units=metric&q=";
 var city = "Pisa";
-const tick = interval(100);
+const tick = interval(1);
 var t1 = 0;
 //Costruisco l'observable
 const temp = new Observable(subscriber =>
@@ -26,7 +26,12 @@ const temp = new Observable(subscriber =>
   })
 );
 
-// subscriber
+// Due subscriber
+temp.subscribe({
+  next(x) {
+    console.log(x);
+  }
+});
 temp.subscribe({
   next(x) {
     document.getElementById("output").innerHTML += x + "<br>";
